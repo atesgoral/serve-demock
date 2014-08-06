@@ -1,20 +1,21 @@
 {
-    "name": "serve-demock",
-    "preferGlobal": true,
-    "version": "0.0.1",
-    "description": "A Demock-enabled simple HTTP server",
-    "author": "Ates Goral <ates@magnetiq.com>",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/atesgoral/serve-demock.git"
-    },
-    "dependencies": {
-        "express": "^4.7.4",
-        "morgan": "^1.2.2",
-        "demock-express": "0.0.0",
-        "body-parser": "^1.6.0"
-    },
-    "bin": {
-        "touch": "./bin/serve-demock"
-    }
+  "name": "serve-demock",
+  "version": "0.1.0",
+  "description": "A Demock-enabled simple HTTP server",
+  "author": "Ates Goral <ates@magnetiq.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/atesgoral/serve-demock.git"
+  },
+  "bin": {
+    "serve-demock": "./bin/serve-demock"
+  },
+  "dependencies": {
+    "express": "~4.7.4",
+    "morgan": "~1.2.2",
+    "demock-express": "~0.1.0",
+    "body-parser": "~1.6.0"
+  },
+  "preferGlobal": true
 } 
