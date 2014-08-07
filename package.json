@@ -1,6 +1,6 @@
 {
   "name": "serve-demock",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A Demock-enabled simple HTTP server",
   "author": "Ates Goral <ates@magnetiq.com>",
   "license": "MIT",
@@ -14,7 +14,7 @@
   "dependencies": {
     "body-parser": "~1.6.0",
     "commander": "~2.3.0",
-    "demock-express": "~0.2.0",
+    "demock-express": "~0.2.1",
     "express": "~4.7.4",
     "morgan": "~1.2.2"
   },
