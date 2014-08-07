@@ -27,6 +27,7 @@ var staticOptions = {
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(morgan('\033[96m:method\033[0m :url', { immediate: true }));
 app.use(morgan('\033[90m-->\033[0m \033[96m:method\033[0m :url \033[96m:status\033[0m :response-time(ms)', { immediate: false }));
 app.use(demock({
