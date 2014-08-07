@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var commander = require('commander'),
-    resolve = require('path').resolve,
+    path = require('path'),
     express = require('express'),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
@@ -15,7 +15,7 @@ commander
     .option('-i, --ignore-mime', 'ignore MIME type')
     .parse(process.argv);
 
-var root = resolve(commander.args.shift() || '.');
+var root = path.resolve(commander.args.shift() || '.');
 
 var app = express();
 
@@ -27,18 +27,18 @@ var staticOptions = {
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(morgan(':method :url', { immediate: true }));
-app.use(morgan('--> :method :url :status :response-time', { immediate: false }));
+app.use(morgan('\033[96m:method\033[0m :url', { immediate: true }));
+app.use(morgan('\033[90m-->\033[0m \033[96m:method\033[0m :url \033[96m:status\033[0m :response-time(ms)', { immediate: false }));
 app.use(demock({
     jsonPath: commander.jsonPath,
-    ignoreMime: commander.ignoreMime, 
+    ignoreMime: commander.ignoreMime,
     static: {
         root: root,
         options: staticOptions
     }
 }));
-app.use(express.static(path, staticOptions));
+app.use(express.static(root, staticOptions));
 
 app.listen(commander.port, function () {
-    console.log('\033[90mserving \033[36m%s\033[90m on port \033[96m%d\033[0m', path, commander.port);
+    console.log('\033[90mserving \033[36m%s\033[90m on port \033[96m%d\033[0m', root, commander.port);
 });
