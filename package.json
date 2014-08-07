@@ -12,10 +12,11 @@
     "serve-demock": "./bin/serve-demock"
   },
   "dependencies": {
-    "express": "~4.7.4",
-    "morgan": "~1.2.2",
+    "body-parser": "~1.6.0",
+    "commander": "~2.3.0",
     "demock-express": "~0.1.0",
-    "body-parser": "~1.6.0"
+    "express": "~4.7.4",
+    "morgan": "~1.2.2"
   },
   "preferGlobal": true
-} 
+}

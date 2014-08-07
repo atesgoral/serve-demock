@@ -1,9 +1,21 @@
 #!/usr/bin/env node
 
-var express = require('express'),
+var commander = require('commander'),
+    resolve = require('path').resolve,
+    express = require('express'),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
     demock = require('demock-express');
+
+commander
+    .version(require('../package.json').version)
+    .usage('[options] [root directory]')
+    .option('-j, --json-path <path>', 'specify the relative path to mock JSON data [/]', String, '/')
+    .option('-p, --port <port>', 'specify the port [3000]', Number, 3000)
+    .option('-i, --ignore-mime', 'ignore MIME type')
+    .parse(process.argv);
+
+var root = resolve(commander.args.shift() || '.');
 
 var app = express();
 
@@ -17,7 +29,16 @@ var staticOptions = {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan(':method :url', { immediate: true }));
 app.use(morgan('--> :method :url :status :response-time', { immediate: false }));
-app.use(demock('/api', __dirname, staticOptions));
-app.use(express.static(__dirname, staticOptions));
+app.use(demock({
+    jsonPath: commander.jsonPath,
+    ignoreMime: commander.ignoreMime, 
+    static: {
+        root: root,
+        options: staticOptions
+    }
+}));
+app.use(express.static(path, staticOptions));
 
-app.listen(3000);
+app.listen(commander.port, function () {
+    console.log('\033[90mserving \033[36m%s\033[90m on port \033[96m%d\033[0m', path, commander.port);
+});
