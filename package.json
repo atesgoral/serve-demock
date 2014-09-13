@@ -1,15 +1,15 @@
 {
-  "name": "serve-demock",
+  "name": "demock-server",
   "version": "0.2.1",
   "description": "A Demock-enabled simple HTTP server",
   "author": "Ates Goral <ates@magnetiq.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/atesgoral/serve-demock.git"
+    "url": "git://github.com/atesgoral/demock-server.git"
   },
   "bin": {
-    "serve-demock": "./bin/serve-demock"
+    "demock-server": "./bin/demock-server"
   },
   "dependencies": {
     "body-parser": "~1.6.0",

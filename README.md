@@ -1,18 +1,18 @@
-# serve-demock
+# demock-server
 
 A [Demock](https://github.com/atesgoral/demock)-enabled simple HTTP server
 
 ## Installation
 
 ```
-npm install -g serve-demock
+npm install -g demock-server
 ```
 
 ## Usage
 
 
 ```
-serve-demock [options] [root directory]
+demock-server [options] [root directory]
 
 Options:
 
