@@ -5,17 +5,43 @@ var commander = require('commander'),
     express = require('express'),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
-    demock = require('demock-express');
+    demock = require('demock-express'),
+    fs = require('fs'),
+    extend = require('node.extend');
 
-commander
+var defaults = {
+    root: '.',
+    jsonPath: '/',
+    port: 3000
+};
+
+var args = commander
     .version(require('../package.json').version)
     .usage('[options] [root directory]')
-    .option('-j, --json-path <path>', 'specify the relative path to mock JSON data [/]', String, '/')
-    .option('-p, --port <port>', 'specify the port [3000]', Number, 3000)
+    .option('-j, --json-path <path>', 'specify the relative path to mock JSON data [/]', String)
+    .option('-p, --port <port>', 'specify the port [3000]', Number)
     .option('-i, --ignore-mime', 'ignore MIME type')
     .parse(process.argv);
 
-var root = path.resolve(commander.args.shift() || '.');
+if (commander.args.length) {
+    args.root = commander.args.shift();
+}
+
+var localConfig = {};
+
+try {
+    var localConfigFilePath = __dirname + '/.demock-server';
+    localConfig = JSON.parse(fs.readFileSync(localConfigFilePath, 'utf8'));
+    console.log('\033[90mUsing ' + localConfigFilePath);
+} catch (e) {} // @todo catch bad json and log
+
+var config = extend(true, {}, defaults, localConfig, {
+    root: args.root,
+    jsonPath: args.jsonPath,
+    port: args.port
+});
+
+var root = path.resolve(config.root || '.');
 
 var app = express();
 
@@ -31,8 +57,8 @@ app.use(bodyParser.json());
 app.use(morgan('\033[96m:method\033[0m :url', { immediate: true }));
 app.use(morgan('\033[90m-->\033[0m \033[96m:method\033[0m :url \033[96m:status\033[0m :response-time(ms)', { immediate: false }));
 app.use(demock({
-    jsonPath: commander.jsonPath,
-    ignoreMime: commander.ignoreMime,
+    jsonPath: config.jsonPath,
+    ignoreMime: config.ignoreMime,
     static: {
         root: root,
         options: staticOptions
@@ -40,6 +66,6 @@ app.use(demock({
 }));
 app.use(express.static(root, staticOptions));
 
-app.listen(commander.port, function () {
-    console.log('\033[90mserving \033[36m%s\033[90m on port \033[96m%d\033[0m', root, commander.port);
+app.listen(config.port, function () {
+    console.log('\033[90mserving \033[36m%s\033[90m on port \033[96m%d\033[0m', root, config.port);
 });
