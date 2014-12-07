@@ -18,7 +18,7 @@ var defaults = {
 var args = commander
     .version(require('../package.json').version)
     .usage('[options] [root directory]')
-    .option('-j, --json-path <path>', 'specify the relative path to mock JSON data [/]', String)
+    .option('-j, --json-path <path>', 'specify the relative path to mock JSON data []', String)
     .option('-p, --port <port>', 'specify the port [3000]', Number)
     .option('-i, --ignore-mime', 'ignore MIME type')
     .parse(process.argv);
