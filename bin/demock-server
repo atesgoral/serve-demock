@@ -11,7 +11,7 @@ var commander = require('commander'),
 
 var defaults = {
     root: '.',
-    jsonPath: '/',
+    jsonPath: '',
     port: 3000
 };
 
@@ -52,19 +52,16 @@ var staticOptions = {
     }
 };
 
+var demockOptions = {
+    jsonPath: config.jsonPath,
+    ignoreMime: config.ignoreMime
+};
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('\033[96m:method\033[0m :url', { immediate: true }));
 app.use(morgan('\033[90m-->\033[0m \033[96m:method\033[0m :url \033[96m:status\033[0m :response-time(ms)', { immediate: false }));
-app.use(demock({
-    jsonPath: config.jsonPath,
-    ignoreMime: config.ignoreMime,
-    static: {
-        root: root,
-        options: staticOptions
-    }
-}));
-app.use(express.static(root, staticOptions));
+app.use(demock(express.static(root, staticOptions), demockOptions));
 
 app.listen(config.port, function () {
     console.log('\033[90mserving \033[36m%s\033[90m on port \033[96m%d\033[0m', root, config.port);
