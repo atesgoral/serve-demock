@@ -31,7 +31,6 @@ var localConfig = {};
 
 try {
     var localConfigFilePath = process.cwd() + '/.demock-server';
-    console.log(localConfigFilePath);
     localConfig = JSON.parse(fs.readFileSync(localConfigFilePath, 'utf8'));
     console.log('\033[90mUsing ' + localConfigFilePath);
 } catch (e) {} // @todo catch bad json and log
