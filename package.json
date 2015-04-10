@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/atesgoral/demock-server.git"
+    "url": "git://github.com/demockjs/demock-server.git"
   },
   "bin": {
     "demock-server": "./bin/demock-server"
